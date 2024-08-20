@@ -46,7 +46,7 @@ Ubuntu  16.04.
 ROS Kinetic. [ROS Installation](http://wiki.ros.org/ROS/Installation)
 additional ROS pacakge
 ```
-    sudo apt-get install ros-YOUR_DISTRO-cv-bridge ros-YOUR_DISTRO-tf ros-YOUR_DISTRO-message-filters ros-YOUR_DISTRO-image-transport
+    sudo apt-get install ros-noetic-cv-bridge ros-noetic-tf ros-noetic-message-filters ros-noetic-image-transport
 ```
 
 
