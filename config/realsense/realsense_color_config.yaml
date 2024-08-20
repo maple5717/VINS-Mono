@@ -1,25 +1,25 @@
 %YAML:1.0
 
 #common parameters
-imu_topic: "/camera/imu/data_raw"
-image_topic: "/camera/color/image_raw"
-output_path: "/home/tony-ws1/output/"
+imu_topic: "/camera/camera/imu"
+image_topic: "/camera/camera/color/image_raw"
+output_path: "~/vio_ws/output/"
 
 #camera calibration 
 model_type: PINHOLE
-camera_name: camera
+camera_name: camera/camera
 image_width: 640
 image_height: 480
 distortion_parameters:
-   k1: 9.2615504465028850e-02
-   k2: -1.8082438825995681e-01
-   p1: -6.5484100374765971e-04
-   p2: -3.5829351558557421e-04
+   k1: 0.0 #9.2615504465028850e-02
+   k2: 0.0 #-1.8082438825995681e-01
+   p1: 0.0 #-6.5484100374765971e-04
+   p2: 0.0 #-3.5829351558557421e-04
 projection_parameters:
-   fx: 6.0970550296798035e+02
-   fy: 6.0909579671294716e+02
-   cx: 3.1916667152289227e+02
-   cy: 2.3558360480225772e+02
+   fx: 605.2938232421875
+   fy: 605.4811401367188
+   cx: 316.6695556640625   
+   cy: 236.89938354492188
 
 # Extrinsic parameter between IMU and Camera.
 estimate_extrinsic: 0   # 0  Have an accurate extrinsic parameters. We will trust the following imu^R_cam, imu^T_cam, don't change it.
@@ -31,9 +31,15 @@ extrinsicRotation: !!opencv-matrix
    rows: 3
    cols: 3
    dt: d
-   data: [ 0.99964621,  0.01105994,  0.02418954,
-           -0.01088975,  0.9999151,  -0.00715601, 
-           -0.02426663,  0.00689006,  0.99968178]
+   data: [ 1,0,0,
+            0,1,0,
+            0,0,1]
+   # data: [ 0,-1,0,
+   #          0,0,-1,
+   #          1,0,0]
+   # data: [ 0,0,1,
+   #         -1,0,0,
+   #         0,-1,0]
 #Translation from camera frame to imu frame, imu^T_cam
 extrinsicTranslation: !!opencv-matrix
    rows: 3
@@ -51,8 +57,8 @@ equalize: 0             # if image is too dark or light, trun on equalize to fin
 fisheye: 0              # if using fisheye, trun on it. A circle mask will be loaded to remove edge noisy points
 
 #optimization parameters
-max_solver_time: 0.04  # max solver itration time (ms), to guarantee real time
-max_num_iterations: 8   # max solver itrations, to guarantee real time
+max_solver_time: 0.05  # max solver itration time (ms), to guarantee real time
+max_num_iterations: 10   # max solver itrations, to guarantee real time
 keyframe_parallax: 10.0 # keyframe selection threshold (pixel)
 
 #imu parameters       The more accurate parameters you provide, the better performance
@@ -63,10 +69,10 @@ gyr_w: 2.0e-5       # gyroscope bias random work noise standard deviation.     #
 g_norm: 9.805       # gravity magnitude
 
 #loop closure parameters
-loop_closure: 1                    # start loop closure
+loop_closure: 0                    # start loop closure
 fast_relocalization: 1             # useful in real-time and large project
 load_previous_pose_graph: 0        # load and reuse previous pose graph; load from 'pose_graph_save_path'
-pose_graph_save_path: "/home/tony-ws1/output/pose_graph/" # save and load path
+pose_graph_save_path: "~/vio_ws/output/pose_graph/" # save and load path
 
 #unsynchronization parameters
 estimate_td: 1                      # online estimate time offset between camera and imu
@@ -77,6 +83,6 @@ rolling_shutter: 1                      # 0: global shutter camera, 1: rolling s
 rolling_shutter_tr: 0.033               # unit: s. rolling shutter read out time per frame (from data sheet). 
 
 #visualization parameters
-save_image: 1                   # save image in pose graph for visualization prupose; you can close this function by setting 0 
+save_image: 0                   # save image in pose graph for visualization prupose; you can close this function by setting 0 
 visualize_imu_forward: 0        # output imu forward propogation to achieve low latency and high frequence results
 visualize_camera_size: 0.4      # size of camera marker in RVIZ
