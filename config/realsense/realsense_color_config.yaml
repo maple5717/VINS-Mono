@@ -3,7 +3,7 @@
 #common parameters
 imu_topic: "/camera/camera/imu"
 image_topic: "/camera/camera/color/image_raw"
-output_path: "~/vio_ws/output/"
+output_path: "~/wrp_workspace/ros1_ws/output/"
 
 #camera calibration 
 model_type: PINHOLE
@@ -50,9 +50,9 @@ extrinsicTranslation: !!opencv-matrix
 #feature traker paprameters
 max_cnt: 150            # max feature number in feature tracking
 min_dist: 25            # min distance between two features 
-freq: 10                # frequence (Hz) of publish tracking result. At least 10Hz for good estimation. If set 0, the frequence will be same as raw image 
+freq: 15                # frequence (Hz) of publish tracking result. At least 10Hz for good estimation. If set 0, the frequence will be same as raw image 
 F_threshold: 1.0        # ransac threshold (pixel)
-show_track: 1           # publish tracking image as topic
+show_track: 0           # publish tracking image as topic
 equalize: 0             # if image is too dark or light, trun on equalize to find enough features
 fisheye: 0              # if using fisheye, trun on it. A circle mask will be loaded to remove edge noisy points
 
