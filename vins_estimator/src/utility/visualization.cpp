@@ -49,7 +49,7 @@ void pubLatestOdometry(const Eigen::Vector3d &P, const Eigen::Quaterniond &Q, co
     nav_msgs::Odometry odometry;
     odometry.header = header;
     odometry.header.frame_id = "odom";
-    odometry.child_frame_id = "base_link"; //"camera_imu_optical_frame";
+    odometry.child_frame_id = "imu_link"; //"camera_imu_optical_frame";
     odometry.pose.pose.position.x = P.x();
     odometry.pose.pose.position.y = P.y();
     odometry.pose.pose.position.z = P.z();
@@ -111,7 +111,7 @@ void pubOdometry(const Estimator &estimator, const std_msgs::Header &header)
         nav_msgs::Odometry odometry;
         odometry.header = header;
         odometry.header.frame_id = "odom";
-        odometry.child_frame_id = "base_link";
+        odometry.child_frame_id = "imu_link";
         Quaterniond tmp_Q;
         tmp_Q = Quaterniond(estimator.Rs[WINDOW_SIZE]);
         odometry.pose.pose.position.x = estimator.Ps[WINDOW_SIZE].x();
@@ -318,7 +318,7 @@ void pubTF(const Estimator &estimator, const std_msgs::Header &header)
     q.setY(correct_q.y());
     q.setZ(correct_q.z());
     transform.setRotation(q);
-    br.sendTransform(tf::StampedTransform(transform, header.stamp, "odom", "base_link"));
+    br.sendTransform(tf::StampedTransform(transform, header.stamp, "odom", "imu_link"));
 
     // camera frame
     transform.setOrigin(tf::Vector3(estimator.tic[0].x(),
